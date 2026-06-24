@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap');
+
+.nativeintrotitle{
+    font-family: 'Londrina Solid', cursive;
+    font-size: 50px;
+    font-weight: bold;
+    color: #167cdb;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    animation: titleLoad 0.5s ease-out forwards;
+}
+
+.introtext{
+    font-family: 'Londrina Solid', cursive;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    animation: titleLoad 0.8s ease-out forwards;
+}
+
+.introimagewrap {
+    animation: imageLoad 1s ease-out forwards;
+}
+
+.introimage {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 100%;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    border: 1px solid #167cdb;
+}
+
+.introimage:hover {
+    transform: translateY(-10px)
+}
+
+.introwindow {
+    border:solid;
+    width: 500px;
+    border-radius: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    height: 650px;
+}
+
+
+
+@keyframes titleLoad {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes imageLoad {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
