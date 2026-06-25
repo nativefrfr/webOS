@@ -2,16 +2,24 @@
 <html>
 
     <head>
+        <!-- imports and stuff -->
         <link rel="stylesheet" href="intro.css">
         <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
 
         <script src="main.js" defer></script>
         
     </head>
 
-    <body>
-        <div class="topbar">
 
+    <body>
+
+        <!-- this is the top bar thing -->
+        <div class="topbar" id="top">
+            <p style="cursor: pointer" id="welcomeopen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm210-360h60v-180h40v120h60v-120h40v180h60v-200q0-17-11.5-28.5T630-680H450q-17 0-28.5 11.5T410-640v200Zm-50 120v-480 480Z"/></svg></p>
+            <p style="cursor: pointer" id="calculatoropen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640H240v640Zm40-80h120v-80H280v80Zm160 0h120v-80H440v80Zm160 0h120v-80H600v80ZM280-360h400v-280H280v280Z"/></svg></p>
+            <p style="cursor: pointer" id="browseropen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-15-32-25.5-66T334-320H188q29 60 76 105t112 67Zm208 0q65-22 112-67t76-105H626q-6 36-16.5 70T584-178ZM160-400h152q-2-20-2-39.5t0-40.5q0-21 0-40.5t2-39.5H160q-5 20-7.5 39.5T150-480q0 21 2.5 40.5T160-400Zm232 0h176q2-20 2-39.5t0-40.5q0-21-2-40.5t-2-39.5H392q-2 20-2 39.5t0 40.5q0 21 0 40.5t2 39.5Zm256 0h152q5-20 7.5-39.5T810-480q0-21-2.5-40.5T800-560H648q2 20 2 39.5t0 40.5q0 21 0 40.5t-2 39.5ZM584-560h146q-29-60-76-105t-112-67q15 32 25.5 66t16.5 106Zm-180 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-224 0h146q6-72 16.5-106t25.5-66q-65 22-112 67t-76 105Z"/></svg></p>
+            <p style="cursor: pointer" id="spotifyopen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#1DB954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.954 1.609z"/></svg></p>
             <p class="topbartext">
             NativeOS      
         </p> 
@@ -21,8 +29,32 @@
 
         </div>
 
+        <!-- desktop app icons -->
+        <div class="desktopicons">
+            <div class="desktopicon" id="calculatordesktopopen">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffffff"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640H240v640Zm40-80h120v-80H280v80Zm160 0h120v-80H440v80Zm160 0h120v-80H600v80ZM280-360h400v-280H280v280Z"/></svg>
+                <p>calculator</p>
+            </div>
+            <div class="desktopicon" id="welcomedesktopopen">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffffff"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
+                <p>welcome.md</p>
+            </div>
+            <div class="desktopicon" id="browserdesktopopen">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffffff"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-15-32-25.5-66T334-320H188q29 60 76 105t112 67Zm208 0q65-22 112-67t76-105H626q-6 36-16.5 70T584-178ZM160-400h152q-2-20-2-39.5t0-40.5q0-21 0-40.5t2-39.5H160q-5 20-7.5 39.5T150-480q0 21 2.5 40.5T160-400Zm232 0h176q2-20 2-39.5t0-40.5q0-21-2-40.5t-2-39.5H392q-2 20-2 39.5t0 40.5q0 21 0 40.5t2 39.5Zm256 0h152q5-20 7.5-39.5T810-480q0-21-2.5-40.5T800-560H648q2 20 2 39.5t0 40.5q0 21 0 40.5t-2 39.5ZM584-560h146q-29-60-76-105t-112-67q15 32 25.5 66t16.5 106Zm-180 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-224 0h146q6-72 16.5-106t25.5-66q-65 22-112 67t-76 105Z"/></svg>
+                <p>browser</p>
+            </div>
+            <div class="desktopicon" id="spotifydesktopopen">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#1DB954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.954 1.609z"/></svg>
+                <p>spotify</p>
+            </div>
+        </div>
+
+        <!-- this is the window for the intro  -->
         <div id="welcome" class="introwindow">
-            <p id="welcomeheader" class="handle"><svg style="height:40px; width:50px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> </g></svg></p>
+            <p id="welcomeheader" class="handle"> 
+                <svg style="height:40px; width:50px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                <p style="cursor: pointer; transform: translateX(470px) translateY(-65px); height: 20px; width: 20px;" id="welcomeclose"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#970000"></circle> </g></svg><p>
+            </p>
             <h1 class="nativeintrotitle"><b>NativeOS</b></h1>
             <p class="introtext">welcome to NativeOS!</p>
                 <a href="https://native.beer">
@@ -30,6 +62,78 @@
                         <img class="introimage" src="./assets/nativepfp.jpg" alt="laughing blue face emoji" />
                     </div>
                 </a>
+            </div>
+
+        <!-- an app -->
+
+        <div id="calculator" class="window">
+            <p id="calculatorheader" class="handle">
+                <svg style="height:40px; width:50px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                <p style="cursor: pointer; transform: translateX(470px) translateY(-65px); height: 20px; width: 20px;" id="calculatorclose"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#970000"></circle> </g></svg><p>
+                </p>
+            <h1 class="nativeintrotitle" style="margin-top:-50px;"><b>calculator</b></h1>
+            <input type="text" class="calcdisplay" id="calcdisplay" readonly>
+            <div class="calcgrid">
+                <button class="calcbutton" id="calc1">1</button>
+                <button class="calcbutton" id="calc2">2</button>
+                <button class="calcbutton" id="calc3">3</button>
+                <button class="calcbutton" id="calcplus">+</button>
+                <button class="calcbutton" id="calc4">4</button>
+                <button class="calcbutton" id="calc5">5</button>
+                <button class="calcbutton" id="calc6">6</button>
+                <button class="calcbutton" id="calcminus">-</button>
+                <button class="calcbutton" id="calc7">7</button>
+                <button class="calcbutton" id="calc8">8</button>
+                <button class="calcbutton" id="calc9">9</button>
+                <button class="calcbutton" id="calcmultiply">*</button>
+                <button class="calcbutton" id="calc0">0</button>
+                <button class="calcbutton" id="calcequals">=</button>
+                <button class="calcbutton" id="calcdivide">/</button>
+                <button class="calcbutton" id="calcclear">C</button>
+            </div>
+            </div>
+
+        <div id="browser" class="windowbig">
+            <div id="browserheader" class="handle browserhandle">
+                <svg style="height:40px; width:50px; flex:0 0 auto;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> </g></svg>
+                <button class="browserbtn" id="browserback" title="Back"><svg viewBox="0 -960 960 960" height="22" width="22" fill="#001427"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></button>
+                <button class="browserbtn" id="browserforward" title="Forward"><svg viewBox="0 -960 960 960" height="22" width="22" fill="#001427"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></button>
+                <button class="browserbtn" id="browserhome" title="Home"><svg viewBox="0 -960 960 960" height="22" width="22" fill="#001427"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Z"/></svg></button>
+                <input type="text" class="browserurl" id="browserurl" placeholder="Enter URL here">
+                <h1 class="browsertitle"><b>Browser</b></h1>
+                <p style="cursor: pointer; height: 16px; width: 16px; margin: 0; flex:0 0 auto;" id="browserclose"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="8" cy="8" r="8" fill="#970000"></circle> </g></svg></p>
+            </div>
+            <iframe id="browseriframe" class="browseriframe" src="./start.html"></iframe>
+            </div>
+
+        <!-- spotify now-playing app -->
+        <div id="spotify" class="window spotifywindow">
+            <div id="spotifyheader" class="handle spotifyhandle">
+                <svg style="height:28px; width:28px; flex:0 0 auto;" viewBox="0 0 24 24" fill="#1DB954" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.954 1.609z"/></svg>
+                <span class="spotifytitle">Spotify</span>
+                <p style="cursor: pointer; height: 16px; width: 16px; margin: 0; flex:0 0 auto;" id="spotifyclose"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8" fill="#970000"></circle></svg></p>
+            </div>
+
+            <div id="spotifybody" class="spotifybody">
+                <!-- Logged-out view -->
+                <div id="spotifylogin" class="spotifylogin">
+                    <p class="spotifyprompt">See what you're listening to</p>
+                    <input type="text" id="spotifyclientid" class="spotifyclientinput" placeholder="Your Spotify Client ID">
+                    <button id="spotifyconnect" class="spotifyconnectbtn">Connect Spotify</button>
+                    <p id="spotifyredirect" class="spotifyredirectnote"></p>
+                    <p id="spotifyconfignote" class="spotifyconfignote"></p>
+                    <a class="spotifyhelplink" href="https://developer.spotify.com/dashboard" target="_blank">Create an app to get a Client ID →</a>
+                </div>
+
+                <!-- Logged-in / now-playing view -->
+                <div id="spotifyplaying" class="spotifyplaying" style="display:none;">
+                    <img id="spotifyart" class="spotifyart" alt="album art">
+                    <p id="spotifytrack" class="spotifytrackname">Nothing playing</p>
+                    <p id="spotifyartist" class="spotifyartistname"></p>
+                    <p id="spotifystatus" class="spotifystatustext"></p>
+                    <button id="spotifylogout" class="spotifylogoutbtn">Disconnect</button>
+                </div>
+            </div>
         </div>
 
     </body>

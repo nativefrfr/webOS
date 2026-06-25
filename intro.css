@@ -50,9 +50,32 @@
     transform: translate(-50%, -50%);
     background-color: #f9f9f9;
     height: 650px;
+    animation: windowOpen 0.8s ease-out forwards;
 }
 
 
+
+@keyframes windowOpen {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes windowClose {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+}
 
 @keyframes titleLoad {
     from {
