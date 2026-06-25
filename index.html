@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="main.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
 
+        <!-- NicEdit (rich-text editor) hosted locally; nicedit.com is defunct. -->
+        <script src="nicEdit.js" type="text/javascript"></script>
+
         <script src="main.js" defer></script>
         
     </head>
@@ -16,14 +19,15 @@
 
         <!-- this is the top bar thing -->
         <div class="topbar" id="top">
-            <p style="cursor: pointer" id="welcomeopen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm210-360h60v-180h40v120h60v-120h40v180h60v-200q0-17-11.5-28.5T630-680H450q-17 0-28.5 11.5T410-640v200Zm-50 120v-480 480Z"/></svg></p>
+            <p style="cursor: pointer" id="welcomeopen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg></p>
             <p style="cursor: pointer" id="calculatoropen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640H240v640Zm40-80h120v-80H280v80Zm160 0h120v-80H440v80Zm160 0h120v-80H600v80ZM280-360h400v-280H280v280Z"/></svg></p>
             <p style="cursor: pointer" id="browseropen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-15-32-25.5-66T334-320H188q29 60 76 105t112 67Zm208 0q65-22 112-67t76-105H626q-6 36-16.5 70T584-178ZM160-400h152q-2-20-2-39.5t0-40.5q0-21 0-40.5t2-39.5H160q-5 20-7.5 39.5T150-480q0 21 2.5 40.5T160-400Zm232 0h176q2-20 2-39.5t0-40.5q0-21-2-40.5t-2-39.5H392q-2 20-2 39.5t0 40.5q0 21 0 40.5t2 39.5Zm256 0h152q5-20 7.5-39.5T810-480q0-21-2.5-40.5T800-560H648q2 20 2 39.5t0 40.5q0 21 0 40.5t-2 39.5ZM584-560h146q-29-60-76-105t-112-67q15 32 25.5 66t16.5 106Zm-180 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-224 0h146q6-72 16.5-106t25.5-66q-65 22-112 67t-76 105Z"/></svg></p>
             <p style="cursor: pointer" id="spotifyopen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#1DB954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.954 1.609z"/></svg></p>
+            <p style="cursor: pointer" id="notepadopen"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg></p>
             <p class="topbartext">
             NativeOS      
         </p> 
-        <p id="thetime" class="topbartext">
+        <p id="thetime" class="topbartext" style="margin-right: 10px; margin-left: auto;">
             fetching time...
         </p>
 
@@ -32,20 +36,24 @@
         <!-- desktop app icons -->
         <div class="desktopicons">
             <div class="desktopicon" id="calculatordesktopopen">
-                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffffff"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640H240v640Zm40-80h120v-80H280v80Zm160 0h120v-80H440v80Zm160 0h120v-80H600v80ZM280-360h400v-280H280v280Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640H240v640Zm40-80h120v-80H280v80Zm160 0h120v-80H440v80Zm160 0h120v-80H600v80ZM280-360h400v-280H280v280Z"/></svg>
                 <p>calculator</p>
             </div>
             <div class="desktopicon" id="welcomedesktopopen">
-                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffffff"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
                 <p>welcome.md</p>
             </div>
             <div class="desktopicon" id="browserdesktopopen">
-                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffffff"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-15-32-25.5-66T334-320H188q29 60 76 105t112 67Zm208 0q65-22 112-67t76-105H626q-6 36-16.5 70T584-178ZM160-400h152q-2-20-2-39.5t0-40.5q0-21 0-40.5t2-39.5H160q-5 20-7.5 39.5T150-480q0 21 2.5 40.5T160-400Zm232 0h176q2-20 2-39.5t0-40.5q0-21-2-40.5t-2-39.5H392q-2 20-2 39.5t0 40.5q0 21 0 40.5t2 39.5Zm256 0h152q5-20 7.5-39.5T810-480q0-21-2.5-40.5T800-560H648q2 20 2 39.5t0 40.5q0 21 0 40.5t-2 39.5ZM584-560h146q-29-60-76-105t-112-67q15 32 25.5 66t16.5 106Zm-180 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-224 0h146q6-72 16.5-106t25.5-66q-65 22-112 67t-76 105Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-15-32-25.5-66T334-320H188q29 60 76 105t112 67Zm208 0q65-22 112-67t76-105H626q-6 36-16.5 70T584-178ZM160-400h152q-2-20-2-39.5t0-40.5q0-21 0-40.5t2-39.5H160q-5 20-7.5 39.5T150-480q0 21 2.5 40.5T160-400Zm232 0h176q2-20 2-39.5t0-40.5q0-21-2-40.5t-2-39.5H392q-2 20-2 39.5t0 40.5q0 21 0 40.5t2 39.5Zm256 0h152q5-20 7.5-39.5T810-480q0-21-2.5-40.5T800-560H648q2 20 2 39.5t0 40.5q0 21 0 40.5t-2 39.5ZM584-560h146q-29-60-76-105t-112-67q15 32 25.5 66t16.5 106Zm-180 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-224 0h146q6-72 16.5-106t25.5-66q-65 22-112 67t-76 105Z"/></svg>
                 <p>browser</p>
             </div>
             <div class="desktopicon" id="spotifydesktopopen">
                 <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#1DB954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.954 1.609z"/></svg>
                 <p>spotify</p>
+            </div>
+            <div class="desktopicon" id="notepaddesktopopen">
+                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
+                <p>notepad</p>
             </div>
         </div>
 
@@ -135,6 +143,15 @@
                 </div>
             </div>
         </div>
+
+        <div id="notepad" class="window notepadwindow">
+            <div id="notepadheader" class="handle notepadhandle">
+                <svg style="height:28px; width:28px; flex:0 0 auto;" viewBox="0 -960 960 960" fill="#001427" xmlns="http://www.w3.org/2000/svg"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
+                <span class="notepadtitle">Notepad</span>
+                <p style="cursor: pointer; height: 16px; width: 16px; margin: 0; flex:0 0 auto;" id="notepadclose"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8" fill="#970000"></circle></svg></p>
+            </div>
+            <textarea class="notepadtext" id="notepadtext" placeholder="Type your notes here... they save automatically."></textarea>
+            </div>
 
     </body>
 </html>

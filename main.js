@@ -12,6 +12,7 @@ dragElement(document.getElementById("welcome"));
 dragElement(document.getElementById("calculator"));
 dragElement(document.getElementById("browser"));
 dragElement(document.getElementById("spotify"));
+dragElement(document.getElementById("notepad"));
 
 // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
 function dragElement(element) {
@@ -123,6 +124,7 @@ setupWindowControls("welcome", ["welcomeopen","welcomedesktopopen"], "welcomeclo
 setupWindowControls("calculator", ["calculatoropen", "calculatordesktopopen"], "calculatorclose");
 setupWindowControls("browser", ["browseropen", "browserdesktopopen"], "browserclose");
 setupWindowControls("spotify", ["spotifyopen", "spotifydesktopopen"], "spotifyclose");
+setupWindowControls("notepad", ["notepadopen", "notepaddesktopopen"], "notepadclose");
 
 
 var biggestIndex = 1;
@@ -144,6 +146,57 @@ addWindowTapHandling(document.getElementById("welcome"));
 addWindowTapHandling(document.getElementById("calculator"));
 addWindowTapHandling(document.getElementById("browser"));
 addWindowTapHandling(document.getElementById("spotify"));
+addWindowTapHandling(document.getElementById("notepad"));
+
+
+// --- Notepad: NicEdit rich-text editor + persist to localStorage ---
+var notepadText = document.getElementById("notepadtext");
+var notepadEditorReady = false;
+
+// NicEdit copies the editor size from the textarea AT INIT TIME, so we must
+// initialise it only once the notepad window is visible (otherwise it's 0x0).
+function initNotepadEditor() {
+  if (notepadEditorReady || !notepadText) return;
+
+  if (typeof nicEditor === "undefined") {
+    // Fallback: NicEdit failed to load, behave as a plain textarea.
+    notepadText.value = localStorage.getItem("notepad_content") || "";
+    notepadText.addEventListener("input", function() {
+      localStorage.setItem("notepad_content", notepadText.value);
+    });
+    notepadEditorReady = true;
+    return;
+  }
+
+  // Seed the textarea so NicEdit picks up saved content when it initialises.
+  notepadText.value = localStorage.getItem("notepad_content") || "";
+
+  new nicEditor({
+    iconsPath: "nicEditorIcons.gif",
+    maxHeight: 520,
+    buttonList: ["bold", "italic", "underline",
+                 "left", "center", "right",
+                 "ol", "ul", "fontSize", "fontFamily", "fontFormat", "forecolor", "bgcolor"]
+  }).panelInstance("notepadtext");
+
+  var notepadInstance = nicEditors.findEditor("notepadtext");
+  function saveNotepad() {
+    localStorage.setItem("notepad_content", notepadInstance.getContent());
+  }
+  notepadInstance.addEvent("keyup", saveNotepad);
+  notepadInstance.addEvent("blur", saveNotepad);
+
+  notepadEditorReady = true;
+}
+
+// Build the editor the first time the notepad is opened (window now has size).
+["notepadopen", "notepaddesktopopen"].forEach(function(id) {
+  var btn = document.getElementById(id);
+  if (btn) btn.addEventListener("click", function() {
+    // Run after openWindow has made the window visible.
+    setTimeout(initNotepadEditor, 0);
+  });
+});
 
 
 function evaluateExpression(expr) {
@@ -466,3 +519,4 @@ if (spotifyRedirectNote) {
     spotifyShowLogin();
   }
 })();
+
