@@ -13,6 +13,9 @@ dragElement(document.getElementById("calculator"));
 dragElement(document.getElementById("browser"));
 dragElement(document.getElementById("spotify"));
 dragElement(document.getElementById("notepad"));
+dragElement(document.getElementById("settings"));
+dragElement(document.getElementById("files"));
+dragElement(document.getElementById("code"));
 
 // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
 function dragElement(element) {
@@ -125,6 +128,9 @@ setupWindowControls("calculator", ["calculatoropen", "calculatordesktopopen"], "
 setupWindowControls("browser", ["browseropen", "browserdesktopopen"], "browserclose");
 setupWindowControls("spotify", ["spotifyopen", "spotifydesktopopen"], "spotifyclose");
 setupWindowControls("notepad", ["notepadopen", "notepaddesktopopen"], "notepadclose");
+setupWindowControls("settings", ["settingsopen", "settingsdesktopopen"], "settingsclose");
+setupWindowControls("files", ["filesopen", "filesdesktopopen"], "filesclose");
+setupWindowControls("code", ["codeopen", "codedesktopopen"], "codeclose");
 
 
 var biggestIndex = 1;
@@ -147,11 +153,92 @@ addWindowTapHandling(document.getElementById("calculator"));
 addWindowTapHandling(document.getElementById("browser"));
 addWindowTapHandling(document.getElementById("spotify"));
 addWindowTapHandling(document.getElementById("notepad"));
+addWindowTapHandling(document.getElementById("settings"));
+addWindowTapHandling(document.getElementById("files"));
+addWindowTapHandling(document.getElementById("code"));
+
+
+// --- Settings: wallpaper, custom CSS, clear data ---
+function applyWallpaper(url) {
+  if (url) document.body.style.backgroundImage = "url('" + url + "')";
+}
+
+function applyCustomCss(css) {
+  var styleTag = document.getElementById("customcss");
+  if (!styleTag) {
+    styleTag = document.createElement("style");
+    styleTag.id = "customcss";
+    document.head.appendChild(styleTag);
+  }
+  styleTag.textContent = css || "";
+}
+
+var settingsWallpaper = document.getElementById("settingswallpaper");
+var settingsWallpaperApply = document.getElementById("settingswallpaperapply");
+var settingsCss = document.getElementById("settingscss");
+var settingsCssApply = document.getElementById("settingscssapply");
+var settingsClear = document.getElementById("settingsclear");
+
+// Load any saved settings on startup and prefill the fields.
+var savedWallpaper = localStorage.getItem("wallpaper");
+if (savedWallpaper) {
+  applyWallpaper(savedWallpaper);
+  if (settingsWallpaper) settingsWallpaper.value = savedWallpaper;
+}
+var savedCss = localStorage.getItem("custom_css");
+if (savedCss) {
+  applyCustomCss(savedCss);
+  if (settingsCss) settingsCss.value = savedCss;
+}
+
+if (settingsWallpaperApply) settingsWallpaperApply.addEventListener("click", function() {
+  var url = settingsWallpaper.value.trim();
+  localStorage.setItem("wallpaper", url);
+  applyWallpaper(url);
+});
+
+if (settingsCssApply) settingsCssApply.addEventListener("click", function() {
+  var css = settingsCss.value;
+  localStorage.setItem("custom_css", css);
+  applyCustomCss(css);
+});
+
+if (settingsClear) settingsClear.addEventListener("click", function() {
+  if (confirm("Clear all saved data? This removes your notes, wallpaper, custom CSS and Spotify login.")) {
+    localStorage.clear();
+    location.reload();
+  }
+});
 
 
 // --- Notepad: NicEdit rich-text editor + persist to localStorage ---
 var notepadText = document.getElementById("notepadtext");
+var notepadTitleEl = document.querySelector("#notepad .notepadtitle");
 var notepadEditorReady = false;
+var notepadInstance = null;
+// When a file from the Files app is open, edits save back to it (plain text);
+// otherwise the notepad is a global rich-text scratchpad.
+var notepadFile = null;
+
+function notepadMainEl() {
+  return document.querySelector("#notepad .nicEdit-main");
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function saveNotepad() {
+  if (!notepadInstance) return;
+  if (notepadFile) {
+    // Files are plain text — store the editor's text, not its HTML.
+    var el = notepadMainEl();
+    notepadFile.content = el ? el.innerText : "";
+    saveFiles();
+  } else {
+    localStorage.setItem("notepad_content", notepadInstance.getContent());
+  }
+}
 
 // NicEdit copies the editor size from the textarea AT INIT TIME, so we must
 // initialise it only once the notepad window is visible (otherwise it's 0x0).
@@ -162,7 +249,8 @@ function initNotepadEditor() {
     // Fallback: NicEdit failed to load, behave as a plain textarea.
     notepadText.value = localStorage.getItem("notepad_content") || "";
     notepadText.addEventListener("input", function() {
-      localStorage.setItem("notepad_content", notepadText.value);
+      if (notepadFile) { notepadFile.content = notepadText.value; saveFiles(); }
+      else localStorage.setItem("notepad_content", notepadText.value);
     });
     notepadEditorReady = true;
     return;
@@ -179,22 +267,44 @@ function initNotepadEditor() {
                  "ol", "ul", "fontSize", "fontFamily", "fontFormat", "forecolor", "bgcolor"]
   }).panelInstance("notepadtext");
 
-  var notepadInstance = nicEditors.findEditor("notepadtext");
-  function saveNotepad() {
-    localStorage.setItem("notepad_content", notepadInstance.getContent());
-  }
+  notepadInstance = nicEditors.findEditor("notepadtext");
   notepadInstance.addEvent("keyup", saveNotepad);
   notepadInstance.addEvent("blur", saveNotepad);
 
   notepadEditorReady = true;
 }
 
-// Build the editor the first time the notepad is opened (window now has size).
+// Put the notepad back into its plain global-scratchpad mode.
+function notepadShowScratchpad() {
+  notepadFile = null;
+  if (notepadTitleEl) notepadTitleEl.textContent = "Notepad";
+  if (notepadInstance) {
+    notepadInstance.setContent(localStorage.getItem("notepad_content") || "");
+  }
+}
+
+// Load a Files-app file into the notepad as editable text.
+function openFileInNotepad(node) {
+  openWindow(document.getElementById("notepad"));
+  setTimeout(function() {
+    initNotepadEditor();
+    notepadFile = node;
+    if (notepadTitleEl) notepadTitleEl.textContent = node.name;
+    var html = escapeHtml(node.content || "").replace(/\n/g, "<br>");
+    if (notepadInstance) notepadInstance.setContent(html);
+    else if (notepadText) notepadText.value = node.content || "";
+  }, 0);
+}
+
+// Opening the notepad from its own icon shows the global scratchpad.
 ["notepadopen", "notepaddesktopopen"].forEach(function(id) {
   var btn = document.getElementById(id);
   if (btn) btn.addEventListener("click", function() {
     // Run after openWindow has made the window visible.
-    setTimeout(initNotepadEditor, 0);
+    setTimeout(function() {
+      initNotepadEditor();
+      notepadShowScratchpad();
+    }, 0);
   });
 });
 
@@ -520,3 +630,275 @@ if (spotifyRedirectNote) {
   }
 })();
 
+
+/* ============================================================
+   Files app — a tiny file manager stored entirely in localStorage.
+   The tree is a nested structure of folders and files:
+     { name, type: "folder", open: true, children: [...] }
+     { name, type: "file" }
+   ============================================================ */
+var filesTreeEl = document.getElementById("filestree");
+
+function loadFiles() {
+  var raw = localStorage.getItem("files_data");
+  if (raw) {
+    try { return JSON.parse(raw); } catch (e) { /* fall through */ }
+  }
+  // Default starter tree.
+  return {
+    name: "root", type: "folder", open: true, children: [
+      { name: "Documents", type: "folder", open: true, children: [
+        { name: "readme.txt", type: "file", content: "Welcome to NativeOS Files!\n\nDouble-click a .txt file to choose Notepad or the Code editor.\nOther files (like .js or .html) open straight in the Code editor." },
+        { name: "hello.js", type: "file", content: "console.log('hello from NativeOS');" }
+      ]},
+      { name: "Pictures", type: "folder", open: false, children: [] }
+    ]
+  };
+}
+
+function saveFiles() {
+  localStorage.setItem("files_data", JSON.stringify(filesRoot));
+}
+
+var filesRoot = loadFiles();
+var filesSelected = filesRoot; // currently selected node (root by default)
+
+// Walk the tree to find a node's parent (needed for deletion).
+function findParent(node, target) {
+  if (!node.children) return null;
+  for (var i = 0; i < node.children.length; i++) {
+    if (node.children[i] === target) return node;
+    var found = findParent(node.children[i], target);
+    if (found) return found;
+  }
+  return null;
+}
+
+function renderFiles() {
+  if (!filesTreeEl) return;
+  filesTreeEl.innerHTML = "";
+  // Render the root's children (root itself stays implicit).
+  filesRoot.children.forEach(function(child) {
+    renderNode(child, 0);
+  });
+}
+
+function renderNode(node, depth) {
+  var row = document.createElement("div");
+  row.className = "filesrow" + (node === filesSelected ? " selected" : "");
+  row.style.paddingLeft = (8 + depth * 16) + "px";
+
+  var caret = document.createElement("span");
+  caret.className = "filescaret";
+  caret.textContent = node.type === "folder" ? (node.open ? "▾" : "▸") : "";
+  row.appendChild(caret);
+
+  var icon = document.createElement("span");
+  icon.className = "filesicon";
+  icon.textContent = node.type === "folder" ? "📁" : "📄";
+  row.appendChild(icon);
+
+  var label = document.createElement("span");
+  label.textContent = node.name;
+  row.appendChild(label);
+
+  row.addEventListener("click", function(e) {
+    e.stopPropagation();
+    filesSelected = node;
+    if (node.type === "folder") node.open = !node.open;
+    saveFiles();
+    renderFiles();
+  });
+
+  if (node.type === "file") {
+    row.addEventListener("dblclick", function(e) {
+      e.stopPropagation();
+      filesSelected = node;
+      openFile(node);
+    });
+  }
+
+  filesTreeEl.appendChild(row);
+
+  if (node.type === "folder" && node.open) {
+    node.children.forEach(function(child) {
+      renderNode(child, depth + 1);
+    });
+  }
+}
+
+// Where new items go: into the selected folder, or the selected file's parent.
+function targetFolder() {
+  if (filesSelected === filesRoot) return filesRoot;
+  if (filesSelected.type === "folder") return filesSelected;
+  return findParent(filesRoot, filesSelected) || filesRoot;
+}
+
+function addItem(type) {
+  var name = prompt("Name of new " + type + ":");
+  if (!name) return;
+  name = name.trim();
+  if (!name) return;
+  var folder = targetFolder();
+  folder.open = true;
+  var node = { name: name, type: type };
+  if (type === "folder") { node.open = true; node.children = []; }
+  folder.children.push(node);
+  filesSelected = node;
+  saveFiles();
+  renderFiles();
+}
+
+var filesNewFileBtn = document.getElementById("filesnewfile");
+var filesNewFolderBtn = document.getElementById("filesnewfolder");
+var filesDeleteBtn = document.getElementById("filesdelete");
+
+if (filesNewFileBtn) filesNewFileBtn.addEventListener("click", function() { addItem("file"); });
+if (filesNewFolderBtn) filesNewFolderBtn.addEventListener("click", function() { addItem("folder"); });
+if (filesDeleteBtn) filesDeleteBtn.addEventListener("click", function() {
+  if (filesSelected === filesRoot) { alert("Select a file or folder to delete."); return; }
+  var label = filesSelected.type === "folder"
+    ? 'folder "' + filesSelected.name + '" and everything inside it'
+    : 'file "' + filesSelected.name + '"';
+  if (!confirm("Delete " + label + "?")) return;
+  var parent = findParent(filesRoot, filesSelected);
+  if (parent) {
+    parent.children.splice(parent.children.indexOf(filesSelected), 1);
+    filesSelected = filesRoot;
+    saveFiles();
+    renderFiles();
+  }
+});
+
+renderFiles();
+
+
+/* ============================================================
+   Opening files: .txt offers a choice of Notepad or Code editor;
+   anything else opens straight in the code editor.
+   ============================================================ */
+var openChooser = document.getElementById("openchooser");
+var openChooserTitle = document.getElementById("openchoosertitle");
+var openInNotepadBtn = document.getElementById("openinnotepad");
+var openInCodeBtn = document.getElementById("openincode");
+var openChooserCancel = document.getElementById("openchoosercancel");
+var fileAwaitingChoice = null;
+
+function fileExtension(name) {
+  var i = name.lastIndexOf(".");
+  return i >= 0 ? name.slice(i + 1).toLowerCase() : "";
+}
+
+function openFile(node) {
+  if (!node || node.type !== "file") return;
+  if (fileExtension(node.name) === "txt") {
+    // Let the user pick how to open plain-text files.
+    fileAwaitingChoice = node;
+    if (openChooserTitle) openChooserTitle.textContent = "Open " + node.name;
+    if (openChooser) openChooser.style.display = "flex";
+  } else {
+    openFileInCode(node);
+  }
+}
+
+if (openInNotepadBtn) openInNotepadBtn.addEventListener("click", function() {
+  if (openChooser) openChooser.style.display = "none";
+  if (fileAwaitingChoice) openFileInNotepad(fileAwaitingChoice);
+  fileAwaitingChoice = null;
+});
+if (openInCodeBtn) openInCodeBtn.addEventListener("click", function() {
+  if (openChooser) openChooser.style.display = "none";
+  if (fileAwaitingChoice) openFileInCode(fileAwaitingChoice);
+  fileAwaitingChoice = null;
+});
+if (openChooserCancel) openChooserCancel.addEventListener("click", function() {
+  if (openChooser) openChooser.style.display = "none";
+  fileAwaitingChoice = null;
+});
+
+// "Open" toolbar button opens the selected file (same as double-click).
+var filesOpenBtn = document.getElementById("filesopenbtn");
+if (filesOpenBtn) filesOpenBtn.addEventListener("click", function() {
+  if (filesSelected && filesSelected.type === "file") openFile(filesSelected);
+  else alert("Select a file to open.");
+});
+
+
+/* ============================================================
+   Code editor — Monaco (the engine behind VS Code), CDN-loaded.
+   ============================================================ */
+var monacoEditor = null;
+var codeCurrentFile = null;
+var codeTitleEl = document.getElementById("codetitle");
+var codeStatusEl = document.getElementById("codestatus");
+
+// Map file extensions to Monaco language ids.
+function monacoLanguage(name) {
+  var ext = fileExtension(name);
+  var map = {
+    js: "javascript", ts: "typescript", json: "json", html: "html", htm: "html",
+    css: "css", md: "markdown", py: "python", java: "java", c: "c", cpp: "cpp",
+    cs: "csharp", go: "go", rs: "rust", rb: "ruby", php: "php", sh: "shell",
+    xml: "xml", yml: "yaml", yaml: "yaml", sql: "sql", txt: "plaintext"
+  };
+  return map[ext] || "plaintext";
+}
+
+function withMonaco(callback) {
+  if (monacoEditor) { callback(); return; }
+  if (typeof require === "undefined") return; // Monaco loader failed to load.
+  // Configure the AMD loader and the cross-origin worker proxy (needed when
+  // Monaco is served from a CDN).
+  require.config({ paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs" } });
+  window.MonacoEnvironment = {
+    getWorkerUrl: function() {
+      var base = "https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/";
+      var proxy = "self.MonacoEnvironment={baseUrl:'" + base + "'};" +
+                  "importScripts('" + base + "vs/base/worker/workerMain.js');";
+      return "data:text/javascript;charset=utf-8," + encodeURIComponent(proxy);
+    }
+  };
+  require(["vs/editor/editor.main"], function() {
+    monacoEditor = monaco.editor.create(document.getElementById("monacocontainer"), {
+      value: "",
+      language: "plaintext",
+      theme: "vs-dark",
+      automaticLayout: true,
+      fontSize: 14,
+      minimap: { enabled: true }
+    });
+    monacoEditor.onDidChangeModelContent(function() {
+      if (codeCurrentFile) {
+        codeCurrentFile.content = monacoEditor.getValue();
+        saveFiles();
+        if (codeStatusEl) codeStatusEl.textContent = "saved";
+      }
+    });
+    callback();
+  });
+}
+
+function openFileInCode(node) {
+  openWindow(document.getElementById("code"));
+  withMonaco(function() {
+    codeCurrentFile = node;
+    monaco.editor.setModelLanguage(monacoEditor.getModel(), monacoLanguage(node.name));
+    monacoEditor.setValue(node.content || "");
+    if (codeTitleEl) codeTitleEl.textContent = node.name;
+    if (codeStatusEl) codeStatusEl.textContent = "";
+    monacoEditor.layout();
+  });
+}
+
+// Opening the code editor from its own icon just shows the current buffer.
+["codeopen", "codedesktopopen"].forEach(function(id) {
+  var btn = document.getElementById(id);
+  if (btn) btn.addEventListener("click", function() {
+    setTimeout(function() {
+      withMonaco(function() {
+        if (!codeCurrentFile && codeTitleEl) codeTitleEl.textContent = "Code";
+        monacoEditor.layout();
+      });
+    }, 0);
+  });
+});
